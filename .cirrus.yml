@@ -1,4 +1,9 @@
 container:
-  image: gcc:latest
-task:
-  tests_script: make tests
+  image: crystallang/crystal:latest
+
+spec_task:
+  shard_cache:
+    fingerprint_script: cat shard.lock
+    populate_script: shards install
+    folder: lib
+  spec_script: crystal spec

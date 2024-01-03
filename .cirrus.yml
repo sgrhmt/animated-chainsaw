@@ -1,4 +1,4 @@
 container:
-  image: l.gcr.io/google/bazel:latest
+  image: gcc:latest
 task:
-  build_script: bazel build //...
+  tests_script: make tests

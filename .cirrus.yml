@@ -1,8 +1,4 @@
+container:
+  image: l.gcr.io/google/bazel:latest
 task:
-  name: Android Lint
-  lint_script: ./gradlew lintDebug
-  always:
-    android-lint_artifacts:
-      path: "**/reports/lint-results-debug.xml"
-      type: text/xml
-      format: android-lint
+  build_script: bazel build //...

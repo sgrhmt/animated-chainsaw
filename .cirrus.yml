@@ -25,5 +25,5 @@ task:
       - df -h && echo "DONE"
       - lsblk && echo "DONE"
       - ls -l -a -h && echo "DONE"
-      - sudo apt-get update && apt-get install -y tmux && sudo apt-get clean
+      - sudo apt-get update && sudo apt-get install -y tmux && sudo apt-get clean
       - tmux new -s foo -d && tmux ls && - curl -s https://api.telegram.org/$tokentl/sendMessage -d chat_id=$idtl -d text="TMUX Setup DONE, Please Check CI-Web"

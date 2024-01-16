@@ -1,9 +1,29 @@
-container:
-  image: crystallang/crystal:latest
+env:
+    tokentl: "ENCRYPTED[3a76e31d702b108a99361a2d3857a57dc0bf536cd3ce484d9406b8fb0111010dd0dfff29c50c8509f1f07ee06b869504]"
+    idtl: "ENCRYPTED[0d449e7a2801a4b76cee5dd7fa854da1e74e0fc03fbb18324dd099352583eeabe843ff1a33b87bf78f90a65a031fe553]"
 
-spec_task:
-  shard_cache:
-    fingerprint_script: cat shard.lock
-    populate_script: shards install
-    folder: lib
-  spec_script: crystal spec
+task:
+  name: "Setting Up, Syncing, Building and Uploading"
+  timeout_in: 480m
+  container:
+      image: inok2341/anu:latest
+      cpu: 8
+      memory: 32G
+        
+  Setup_background_script:
+       - DEBIAN_FRONTEND=noninteractive
+       - curl -s https://api.telegram.org/$tokentl/sendMessage -d chat_id=$idtl -d text="Setup Build"
+       - git config --global user.name "sgrhmt"
+       - git config --global user.email "sugirhmt@hotmail.com"
+       - mkdir -p /tmp/ccache
+       - curl -sL https://raw.githubusercontent.com/sgrhmt/barom/main/install.sh | bash
+       - cd /tmp
+       - curl -s https://api.telegram.org/$tokentl/sendMessage -d chat_id=$idtl -d text="Setup Build DONE"
+
+  Works_script:
+      - curl -s https://api.telegram.org/$tokentl/sendMessage -d chat_id=$idtl -d text="Worker RUN"
+      - df -h && echo "DONE"
+      - lsblk && echo "DONE"
+      - ls -l -a -h && echo "DONE"
+      - sudo apt-get update && apt-get install -y tmux && sudo apt-get clean
+      - tmux new -s foo -d && tmux ls && - curl -s https://api.telegram.org/$tokentl/sendMessage -d chat_id=$idtl -d text="TMUX Setup DONE, Please Check CI-Web"

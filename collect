@@ -1,0 +1,16 @@
+#!/bin/bash
+cd /tmp/rom
+
+source build/envsetup.sh
+export CCACHE_DIR=/tmp/ccache
+export CCACHE_EXEC=$(which ccache)
+export USE_CCACHE=1
+ccache -M 20G
+ccache -o compression=true
+ccache -z
+barom -b -d onclite -l lineage_onclite-userdebug -c dirty -n LineageOS -u gof -- brunch onclite
+#lunch lineage_onclite-userdebug
+#brunch onclite &
+sleep 105m
+kill %
+ccache -s
